@@ -1,0 +1,3 @@
+%changelog
+* Fri Mar 14 2014 Jussi Laako <jussi.laako@linux.intel.com>
+- Initial RPM packaging
