@@ -5,10 +5,11 @@
 Name:    ecryptfs-utils
 Summary: eCryptfs user space utilities
 Version: 104
-Release: 1
+Release: 2
 Group:   System/Libraries
 License: GPL-2.0+
 Source:  %{name}_%{version}.orig.tar.gz
+Source1: %{name}.manifest
 URL:     http://ecryptfs.org
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
@@ -55,6 +56,7 @@ Requires:   libecryptfs = %{version}-%{release}
 
 %prep
 %setup -q -n %{name}-%{version}
+cp %{SOURCE1} .
 
 
 %build
@@ -75,6 +77,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
+%manifest %{name}.manifest
 %doc AUTHORS COPYING INSTALL NEWS README
 %{_bindir}/ecryptfs*
 /sbin/mount.ecryptfs*
@@ -94,6 +97,7 @@ rm -rf %{buildroot}
 
 %files -n libecryptfs
 %defattr(-,root,root,-)
+%manifest %{name}.manifest
 %{_libdir}/libecryptfs.so.*
 %{_libdir}/ecryptfs/*
 
