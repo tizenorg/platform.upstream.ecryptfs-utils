@@ -18,7 +18,6 @@ Requires: libecryptfs = %{version}-%{release}
 BuildRequires: intltool
 BuildRequires: python-devel
 BuildRequires: keyutils-devel
-BuildRequires: libopenssl-devel
 BuildRequires: nss-devel
 BuildRequires: pam-devel
 
@@ -60,7 +59,7 @@ cp %{SOURCE1} .
 
 
 %build
-%configure
+%configure --disable-openssl
 make %{?_smp_mflags}
 
 
