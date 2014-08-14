@@ -81,7 +81,7 @@ rm -rf %{buildroot}
 %{_bindir}/ecryptfs*
 /sbin/mount.ecryptfs*
 /sbin/umount.ecryptfs*
-%ifarch x86_64
+%ifarch x86_64 aarch64
 /lib64/security/pam_ecryptfs.so
 %else
 /lib/security/pam_ecryptfs.so
