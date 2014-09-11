@@ -23,7 +23,7 @@ A stacked cryptographic filesystem for Linux.
 eCryptfs user space utilities
 
 %package -n libecryptfs
-Summary:    Library for eCryptfs 
+Summary:    Library for eCryptfs
 Group:      System/Libraries
 
 %description -n libecryptfs
