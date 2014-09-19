@@ -1,7 +1,7 @@
 MAINTAINERCLEANFILES = $(srcdir)/Makefile.in
 
 eudatarootdir = $(datarootdir)/ecryptfs-utils
-dist_eudataroot_SCRIPTS = ecryptfs-record-passphrase
+dist_eudataroot_DATA = ecryptfs-record-passphrase
 
 desktopdir = $(datarootdir)/ecryptfs-utils
 
@@ -12,6 +12,3 @@ desktop_in_files = \
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 @INTLTOOL_DESKTOP_RULE@
-
-
- 
