@@ -3,54 +3,55 @@
 %{!?python2_sitearch: %global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 
 Name:    ecryptfs-utils
-Summary: eCryptfs user space utilities
+Summary: ECryptfs utilities
 Version: 104
-Release: 2
+Release: 0
 Group:   System/Libraries
 License: GPL-2.0+
 Source:  %{name}_%{version}.orig.tar.gz
 Source1: %{name}.manifest
 URL:     http://ecryptfs.org
-Requires(post): /sbin/ldconfig
-Requires(postun): /sbin/ldconfig
-Requires: keyutils
-Requires: libecryptfs = %{version}-%{release}
-BuildRequires: intltool
-BuildRequires: python-devel
-BuildRequires: keyutils-devel
-BuildRequires: nss-devel
-BuildRequires: pam-devel
-
+Requires(post):     /sbin/ldconfig
+Requires(postun):   /sbin/ldconfig
+Requires:           keyutils
+Requires:           libecryptfs = %{version}-%{release}
+BuildRequires:      intltool
+BuildRequires:      python-devel
+BuildRequires:      keyutils-devel
+BuildRequires:      nss-devel
+BuildRequires:      pam-devel
+BuildRequires:      pkgconfig(glib-2.0)
+BuildRequires:      fdupes
 
 %description
-%{summary}.
+eCryptfs user space utilities.
 
 
 %package -n libecryptfs
-Summary:    eCryptfs runtime library
+Summary:    ECryptfs library
 Group:      System/Libraries
 
 %description -n libecryptfs
-%{summary}.
+eCryptfs runtime library.
 
 
 %package -n libecryptfs-devel
-Summary:    Development files for %{name}
+Summary:    Devel files for libecryptfs
 Group:      Development/Libraries
 Requires:   libecryptfs = %{version}-%{release}
 Requires:   keyutils-devel
 
 %description -n libecryptfs-devel
-%{summary}.
+Development files for eCryptfs library.
 
 
 %package -n libecryptfs-python
-Summary:    Python bindings for %{name}
+Summary:    Python bindings for libecryptfs
 Group:      Development/Libraries
 Requires:   libecryptfs = %{version}-%{release}
 
 %description -n libecryptfs-python
-%{summary}.
+Python bindings for eCryptfs library.
 
 
 %prep
@@ -59,30 +60,33 @@ cp %{SOURCE1} .
 
 
 %build
-%configure --disable-openssl
-make %{?_smp_mflags}
+%reconfigure --disable-openssl
+%__make %{?_smp_mflags}
 
 
 %install
 rm -rf %{buildroot}
 %make_install
 
+%find_lang %{name}
 
-%post -p /sbin/ldconfig
-
-
-%postun -p /sbin/ldconfig
+%fdupes %{buildroot}
 
 
-%files
+%post -n libecryptfs -p /sbin/ldconfig
+
+%postun -n libecryptfs -p /sbin/ldconfig
+
+
+%files -f %{name}.lang
 %defattr(-,root,root,-)
 %manifest %{name}.manifest
-%doc AUTHORS COPYING INSTALL NEWS README
+%license COPYING
+%doc AUTHORS NEWS
 %{_bindir}/ecryptfs*
 /sbin/mount.ecryptfs*
 /sbin/umount.ecryptfs*
 /%{_lib}/security/pam_ecryptfs.so
-%{_datadir}/locale/*/LC_MESSAGES/ecryptfs-utils.mo
 %{_mandir}/man1/*ecryptfs*
 %{_mandir}/man7/*ecryptfs*
 %{_mandir}/man8/*ecryptfs*
@@ -108,4 +112,3 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %{python2_sitelib}/ecryptfs-utils/*
 %{python2_sitearch}/ecryptfs-utils/*
-
